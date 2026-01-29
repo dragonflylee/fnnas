@@ -322,6 +322,9 @@ unmount_fnnas() {
     rm -f ${tmp_fnnas}/root/chroot_fnnas.sh
     rm -f ${tmp_fnnas}/root/*.deb
     rm -rf ${tmp_path}
+    echo -e "${INFO} Temporary files cleaned."
+
+    sync && sleep 3
 }
 
 chroot_fnnas() {
@@ -458,6 +461,10 @@ chroot_fnnas() {
 
 clean_tmp() {
     echo -e "${STEPS} Cleaning temporary files..."
+
+    # Remove trap to avoid double unmount
+    trap - EXIT
+    # Unmount fnnas base image
     unmount_fnnas
 }
 
